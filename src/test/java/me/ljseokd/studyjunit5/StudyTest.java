@@ -6,11 +6,13 @@ import java.time.Duration;
 import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class StudyTest {
 
     @Test
+    @Disabled
     void create_new_study() {
         Study study = new Study();
         assertNotNull(study);
@@ -48,12 +50,29 @@ class StudyTest {
     }
 
     @Test
-    @DisplayName("스터디 만들기")
-    void create_new_study_again()  {
+    @Disabled
+    void time_out_test() throws Exception {
+        assertTimeoutPreemptively(Duration.ofMillis(10), () ->{
+            new Study();
+            Thread.sleep(3000);
+        });
+    }
+    @Test
+    @Disabled
+    void 조건에_따른_테스트() {
+        assumeTrue("LOCAL".equalsIgnoreCase(System.getenv("TEST_ENV")));
+    }
+
+
+    @CustomTag
+    void create_new_study_fast()  {
         Study study = new Study();
         assertNotNull(study);
         System.out.println("create1");
     }
+
+
+
 
     @BeforeAll // 시작시 한번 실행
     static void beforeAll(){
